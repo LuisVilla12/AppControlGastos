@@ -1,42 +1,52 @@
+// @ts-ignore
+
 import React, {useState} from "react";
 import { StyleSheet, Modal, SafeAreaView, Pressable, Text, TextInput, View } from "react-native";
 import {Picker} from '@react-native-picker/picker';
 import globalStyles from "../styles";
-export default  NuevoGasto =({setModal,handleNuevoGasto})=>{
+const NuevoGasto = ({setModal,handleNuevoGasto})=> {
   const [nombre, setNombre] = useState("");
   const [cantidad, setCantidad] = useState("");
   const [tipoGasto, setTipoGasto] = useState("");
-  return(
+  return (
     <Modal animationType={'slide'}>
-      <SafeAreaView  style={styles.fondo}>
+      <SafeAreaView style={styles.fondo}>
         <View>
-          <Pressable style={[styles.btn,styles.fondoOrange]} onPress={()=>{setModal(false)}}>
+          <Pressable style={[styles.btn, styles.fondoOrange]} onPress={() => {
+            setModal(false)
+          }}>
             <Text style={styles.btnText}> X Cerrar</Text>
           </Pressable>
         </View>
         <View style={styles.formulario}>
-        {/*Gastos*/}
+          {/*Gastos*/}
           <View style={styles.campo}>
             <Text style={styles.titulo}>Nuevo gasto</Text>
             <Text style={styles.label}>Nombre del gasto:</Text>
-            <TextInput keyboardType={'default'} onChangeText={setNombre} value={nombre} style={styles.input} placeholder={'Ingrese el nombre del gasto'}></TextInput>
+            <TextInput keyboardType={'default'} value={nombre} onChangeText={setNombre} style={styles.input}
+                       placeholder={'Ingrese el nombre del gasto'}></TextInput>
           </View>
           <View style={styles.campo}>
             <Text style={styles.label}>Cantidad del gasto:</Text>
-            <TextInput keyboardType={'number-pad'} style={styles.input}  value={cantidad} onChangeText={setCantidad} placeholder={'Ingrese la cantidad del gasto'}></TextInput>
+            <TextInput keyboardType={'number-pad'} style={styles.input} value={cantidad} onChangeText={setCantidad}
+                       placeholder={'Ingrese la cantidad del gasto'}></TextInput>
           </View>
           <View style={styles.campo}>
             <Text style={styles.label}>Categoria de gasto:</Text>
-            <Picker style={styles.input} selectedValue={tipoGasto} onValueChange={(valor)=>{setTipoGasto(valor)}}>
+            <Picker style={styles.input} selectedValue={tipoGasto} onValueChange={(valor) => {
+              setTipoGasto(valor)
+            }}>
               <Picker.Item label="-- Seleccione-- " value=""></Picker.Item>
-              <Picker.Item label="Ahorros" value="ahorro" ></Picker.Item>
-              <Picker.Item label="Salidas" value="salidas" ></Picker.Item>
-              <Picker.Item label="Casa" value="casa" ></Picker.Item>
-              <Picker.Item label="Salud" value="salud" ></Picker.Item>
-              <Picker.Item label="Suscripciones" value="suscripciones" ></Picker.Item>
+              <Picker.Item label="Ahorros" value="ahorro"></Picker.Item>
+              <Picker.Item label="Salidas" value="salidas"></Picker.Item>
+              <Picker.Item label="Casa" value="casa"></Picker.Item>
+              <Picker.Item label="Salud" value="salud"></Picker.Item>
+              <Picker.Item label="Suscripciones" value="suscripciones"></Picker.Item>
             </Picker>
           </View>
-          <Pressable style={styles.btn} onPress={()=>{handleNuevoGasto(nombre,cantidad,tipoGasto)}}>
+          <Pressable style={styles.btn} onPress={() => {
+            handleNuevoGasto({nombre, cantidad, tipoGasto})
+          }}>
             <Text style={styles.btnText}>Agregar gasto</Text>
           </Pressable>
         </View>
@@ -101,3 +111,4 @@ const styles = StyleSheet.create({
     marginTop:5
   }
 })
+export default NuevoGasto;

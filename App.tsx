@@ -12,12 +12,13 @@ import Header from "./src/componets/Header";
 import NuevoPresupuesto from "./src/componets/NuevoPresupuesto";
 import ControlDeGastos from "./src/componets/ControlDeGastos";
 import NuevoGasto from "./src/componets/NuevoGasto";
-
+import {generarID} from "./src/helpers/index"
 function App(): React.JSX.Element {
   const [presupuestoValido, setPresupuestoValido] = React.useState(false);
   const [presupuesto, setPresupuesto] = useState(0);
   const [gastos, setGastos] = React.useState([
   ]);
+  const gasto={}
   const [modal,setModal] = React.useState(false);
   // Validar presupuesto
   const handleNuevoPresupuesto = (presupuesto) => {
@@ -28,14 +29,22 @@ function App(): React.JSX.Element {
     }
   }
   // Nuevo Gasto
-  const handleNuevoGasto = gasto => {
-    console.log(gasto);
+  const handleNuevoGasto = (gasto) => {
+    if(Object.values(gasto).includes('')){
+      Alert.alert('No se admiten campos vacios','Debes ingresar valores validos',[{text:'OK'}]);
+      return;
+    }
+    // Colocar identificador unico
+   gasto.id =generarID();
+    // Agregar gasto al state
+    setGastos([...gastos, gasto]);
+    setModal(false)
   }
   return (
     <SafeAreaView>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Header></Header>
+           <Header></Header>
           {presupuestoValido?
             (<ControlDeGastos gastos={gastos} setGastos={setGastos} presupuesto={presupuesto} setPresupuesto={setPresupuesto}></ControlDeGastos>)
             :
