@@ -13,6 +13,7 @@ import NuevoPresupuesto from "./src/componets/NuevoPresupuesto";
 import ControlDeGastos from "./src/componets/ControlDeGastos";
 import NuevoGasto from "./src/componets/NuevoGasto";
 import {generarID} from "./src/helpers/index"
+import ListadoGastos from "./src/componets/ListadoGastos";
 function App(): React.JSX.Element {
   const [presupuestoValido, setPresupuestoValido] = React.useState(false);
   const [presupuesto, setPresupuesto] = useState(0);
@@ -43,6 +44,7 @@ function App(): React.JSX.Element {
   return (
     <SafeAreaView>
       <View style={styles.container}>
+        <ScrollView>
         <View style={styles.header}>
            <Header></Header>
           {presupuestoValido?
@@ -56,6 +58,10 @@ function App(): React.JSX.Element {
             <Image style={styles.imagen} source={require('./src/imgs/nuevo-gasto.png')}></Image>
           </Pressable>)
         }
+        {presupuestoValido && (
+          <ListadoGastos gastos={gastos}></ListadoGastos>
+        ) }
+        </ScrollView>
         {modal && <NuevoGasto setModal={setModal} handleNuevoGasto={handleNuevoGasto}> </NuevoGasto>}
       </View>
     </SafeAreaView>
@@ -70,8 +76,8 @@ const styles = StyleSheet.create({
     width:60,
     height:60,
     position:'absolute',
-    right:20,
-    top:120
+    right:30,
+    bottom:20
   },
   header:{
     backgroundColor:'#3B82F6',
